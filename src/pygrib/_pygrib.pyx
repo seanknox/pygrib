@@ -422,7 +422,7 @@ cdef class open(object):
             grbs = [self.message(n) for n in xrange(beg,end,inc)]
             self.seek(msg) # put iterator back in original position
             return grbs
-        elif type(key) == int or type(key) == long:
+        elif type(key) == int or isinstance(key, int):
             # for an integer, return a single grib message.
             msg = self.tell()
             grb = self.message(key)
@@ -1923,8 +1923,8 @@ Example usage:
             # if there are no matches for this key, just skip it
             if not size:
                 continue
-            if typ == 'l' or (type(v) == int or type(v) == long):
-                longval = long(v)
+            if typ == 'l' or (type(v) == int or isinstance(v, int)):
+                longval = int(v)
                 err = grib_index_select_long(self._gi, key, longval)
                 if err:
                     raise RuntimeError(_get_error_message(err))
